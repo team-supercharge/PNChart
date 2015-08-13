@@ -35,6 +35,8 @@
 /** Show only values, this is useful when legend is present */
 @property (nonatomic) BOOL showOnlyValues;
 
+@property (nonatomic) BOOL showSuffix;
+
 /** Show absolute values not relative i.e. percentages */
 @property (nonatomic) BOOL showAbsoluteValues;
 

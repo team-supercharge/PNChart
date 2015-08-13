@@ -21,5 +21,6 @@
 @property (nonatomic) CGFloat   value;
 @property (nonatomic) UIColor  *color;
 @property (nonatomic) NSString *textDescription;
+@property (nonatomic) NSString *suffix;
 
 @end

@@ -49,7 +49,7 @@
     if(self){
         _items = [NSArray arrayWithArray:items];
         _outerCircleRadius  = CGRectGetWidth(self.bounds) / 2;
-        _innerCircleRadius  = CGRectGetWidth(self.bounds) / 6;
+        _innerCircleRadius  = 0;
         
         _descriptionTextColor = [UIColor whiteColor];
         _descriptionTextFont  = [UIFont fontWithName:@"Avenir-Medium" size:18.0];
@@ -124,7 +124,7 @@
 
 - (UILabel *)descriptionLabelForItemAtIndex:(NSUInteger)index{
     PNPieChartDataItem *currentDataItem = [self dataItemForIndex:index];
-    CGFloat distance = _innerCircleRadius + (_outerCircleRadius - _innerCircleRadius) / 2;
+    CGFloat distance = (_outerCircleRadius*3)/2.15;
     CGFloat centerPercentage = ([self startPercentageForItemAtIndex:index] + [self endPercentageForItemAtIndex:index])/ 2;
     CGFloat rad = centerPercentage * 2 * M_PI;
     
@@ -133,11 +133,16 @@
     NSString *titleValue;
     
     if (self.showAbsoluteValues) {
-        titleValue = [NSString stringWithFormat:@"%.0f",currentDataItem.value];
+        titleValue = [NSString stringWithFormat:@"%.2f",currentDataItem.value];
     }else{
         titleValue = [NSString stringWithFormat:@"%.0f%%",[self ratioForItemAtIndex:index] * 100];
     }
     if(!titleText || self.showOnlyValues){
+        descriptionLabel.text = titleValue;
+    }
+    if (self.showSuffix)
+    {
+         titleValue = [NSString stringWithFormat:@"%.2f %@",currentDataItem.value,currentDataItem.suffix];
         descriptionLabel.text = titleValue;
     }
     else {

@@ -95,7 +95,7 @@
         while (num > 0)
         {
             PNChartLabel *label = [[PNChartLabel alloc] initWithFrame:CGRectMake(0.0, (NSInteger)(_chartCavanHeight - index * yStepHeight), (NSInteger)_chartMargin, (NSInteger)_yLabelHeight)];
-            [label setTextAlignment:NSTextAlignmentRight];
+            [label setTextAlignment:NSTextAlignmentCenter];
             label.text = [self formatYLabel:_yValueMin + (yStep * index)];
             [self setCustomStyleForYLabel:label];
             [self addSubview:label];
@@ -830,13 +830,24 @@
     else
     {
         if (!self.thousandsSeparator) {
-            NSString *format = self.yLabelFormat ? : @"%1.f";
+            if (_ySuffix)
+            {
+                NSString *format = self.yLabelFormat ? : @"%.0f %@";
+                return [NSString stringWithFormat:format,value,_ySuffix];
+            }
+            NSString *format = self.yLabelFormat ? : @"%.0f";
             return [NSString stringWithFormat:format,value];
         }
         
         NSNumberFormatter* numberFormatter = [[NSNumberFormatter alloc] init];
         [numberFormatter setFormatterBehavior: NSNumberFormatterBehavior10_4];
         [numberFormatter setNumberStyle: NSNumberFormatterDecimalStyle];
+        if (_ySuffix)
+        {
+            NSString *number = [numberFormatter stringFromNumber: [NSNumber numberWithDouble:value]];
+            NSString *text = [NSString stringWithFormat:@"%@%@",number,_ySuffix];
+            return text;
+        }
         return [numberFormatter stringFromNumber: [NSNumber numberWithDouble:value]];
     }
 }

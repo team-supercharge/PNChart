@@ -60,6 +60,7 @@
 
 @property (nonatomic, strong) NSString *xUnit;
 @property (nonatomic, strong) NSString *yUnit;
+@property (nonatomic, strong) NSString *ySuffix;
 
 /**
  * String formatter for float values in y-axis labels. If not set, defaults to @"%1.f"

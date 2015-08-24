@@ -122,7 +122,7 @@
     CGFloat screenScale = [[UIScreen mainScreen] scale];
 
     CGFloat xPos = _chartMargin * 1.5;
-    CGFloat lineWidth = self.bounds.size.width - xPos - _chartMargin;
+    CGFloat lineWidth = self.bounds.size.width - _chartMargin * 2;
 
     UIView *horizontalLine = [[UIView alloc] initWithFrame:CGRectMake(xPos, yPos, lineWidth, 1.0 / screenScale)];
     horizontalLine.backgroundColor = self.horizontalLineColor;

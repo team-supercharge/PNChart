@@ -94,16 +94,40 @@
 
         while (num > 0)
         {
+            // add label
             PNChartLabel *label = [[PNChartLabel alloc] initWithFrame:CGRectMake(0.0, (NSInteger)(_chartCavanHeight - index * yStepHeight), (NSInteger)_chartMargin, (NSInteger)_yLabelHeight)];
             [label setTextAlignment:NSTextAlignmentCenter];
             label.text = [self formatYLabel:_yValueMin + (yStep * index)];
             [self setCustomStyleForYLabel:label];
             [self addSubview:label];
             [_yChartLabels addObject:label];
+
+            // add horizontal line
+            if (self.showHorizontalLines) {
+                CGFloat topPosition = (NSInteger)(_chartCavanHeight - index * yStepHeight + _yLabelHeight / 2.0);
+                UIView *horizontalLine = [self horizontalLineWithYPosition:topPosition];
+                [self addSubview:horizontalLine];
+                [self sendSubviewToBack:horizontalLine];
+                [_yChartLines addObject:horizontalLine];
+            }
+
             index += 1;
             num -= 1;
         }
     }
+}
+
+- (UIView *)horizontalLineWithYPosition:(CGFloat)yPos
+{
+    CGFloat screenScale = [[UIScreen mainScreen] scale];
+
+    CGFloat xPos = _chartMargin * 1.5;
+    CGFloat lineWidth = self.bounds.size.width - xPos - _chartMargin;
+
+    UIView *horizontalLine = [[UIView alloc] initWithFrame:CGRectMake(xPos, yPos, lineWidth, 1.0 / screenScale)];
+    horizontalLine.backgroundColor = self.horizontalLineColor;
+
+    return horizontalLine;
 }
 
 - (void)setYLabels:(NSArray *)yLabels
@@ -129,8 +153,12 @@
         for (PNChartLabel * label in _yChartLabels) {
             [label removeFromSuperview];
         }
+        for (UIView * line in _yChartLines) {
+            [line removeFromSuperview];
+        }
     }else{
         _yChartLabels = [NSMutableArray new];
+        _yChartLines = [NSMutableArray new];
     }
     
     NSString *labelText;
@@ -775,6 +803,9 @@
     _showCoordinateAxis = NO;
     _axisColor = [UIColor colorWithRed:0.4f green:0.4f blue:0.4f alpha:1.f];
     _axisWidth = 1.f;
+
+    _showHorizontalLines = NO;
+    _horizontalLineColor = [UIColor colorWithRed:0.82f green:0.82f blue:0.82f alpha:1.f];
 }
 
 #pragma mark - tools

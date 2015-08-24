@@ -31,6 +31,7 @@
 @property (nonatomic) NSMutableArray *pathPoints;
 @property (nonatomic) NSMutableArray *xChartLabels;
 @property (nonatomic) NSMutableArray *yChartLabels;
+@property (nonatomic) NSMutableArray *yChartLines;
 
 @property (nonatomic) CGFloat xLabelWidth;
 @property (nonatomic) UIFont *xLabelFont;
@@ -57,6 +58,9 @@
 @property (nonatomic, getter = isShowCoordinateAxis) BOOL showCoordinateAxis;
 @property (nonatomic) UIColor *axisColor;
 @property (nonatomic) CGFloat axisWidth;
+
+@property (nonatomic, getter = isShowHorizontalLines) BOOL showHorizontalLines;
+@property (nonatomic) UIColor *horizontalLineColor;
 
 @property (nonatomic, strong) NSString *xUnit;
 @property (nonatomic, strong) NSString *yUnit;
